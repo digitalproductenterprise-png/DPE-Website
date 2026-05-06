@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Forms</title>
+</head>
+<body>
+<form name="contact" netlify netlify-honeypot="bot-field" action="/thanks">
+  <input type="hidden" name="form-name" value="contact" />
+  <p style="display:none">
+    <label>Don't fill this out: <input name="bot-field" /></label>
+  </p>
+  <p><label>Name <input type="text" name="name" /></label></p>
+  <p><label>Business Name <input type="text" name="businessName" /></label></p>
+  <p><label>Email <input type="email" name="email" /></label></p>
+  <p>
+    <label>Service
+      <select name="service">
+        <option>Not sure yet — let's discuss</option>
+        <option>AI Audit</option>
+        <option>Implementation</option>
+        <option>Monthly Retainer</option>
+      </select>
+    </label>
+  </p>
+  <p><button type="submit">Send</button></p>
+</form>
+</body>
+</html>
