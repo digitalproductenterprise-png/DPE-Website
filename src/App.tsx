@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+﻿import React, { useState, useEffect, useRef } from 'react';
 import { Menu, X, ArrowRight, Check, ChevronRight } from 'lucide-react';
 import { motion, AnimatePresence, useInView } from 'framer-motion';
 
@@ -214,7 +214,8 @@ const App: React.FC = () => {
     name: '',
     businessName: '',
     email: '',
-    service: 'Not sure yet — let’s discuss',
+    phone: '',
+    service: "Not sure yet — let's discuss",
   });
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -281,6 +282,7 @@ const App: React.FC = () => {
           name: formData.name,
           business_name: formData.businessName,
           email: formData.email,
+          phone: formData.phone,
           interested_in: formData.service,
           replyto: formData.email,
           botcheck: '',
@@ -296,7 +298,8 @@ const App: React.FC = () => {
           name: '',
           businessName: '',
           email: '',
-          service: 'Not sure yet — let’s discuss',
+          phone: '',
+          service: "Not sure yet — let's discuss",
         });
         setFormErrors({});
         setIsSubmitted(false);
@@ -428,7 +431,7 @@ const App: React.FC = () => {
             business.
           </p>
           <p className="text-[#C9A227] text-base md:text-lg font-medium tracking-wide mb-10">
-            AI that works. Savings you’ll feel.
+            AI that works. Savings you'll feel.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-14">
@@ -473,7 +476,7 @@ const App: React.FC = () => {
               Sound familiar?
             </span>
             <h2 className="gold-heading text-4xl md:text-5xl tracking-tight">
-              You’re not alone
+              You're not alone
             </h2>
           </div>
           <div className="grid md:grid-cols-3 gap-6">
@@ -488,7 +491,7 @@ const App: React.FC = () => {
               },
               {
                 title: 'Unsure where to start',
-                text: 'AI feels overwhelming. You don’t want buzzwords — you want clear, practical next steps.',
+                text: "AI feels overwhelming. You don't want buzzwords — you want clear, practical next steps.",
               },
             ].map((point, index) => (
               <div
@@ -585,7 +588,7 @@ const App: React.FC = () => {
                 Why UK businesses choose DPE
               </h2>
               <p className="text-[#555555] text-base md:text-[17px] leading-relaxed">
-                We’re not another AI consultancy selling hype. We’re practical, UK-based, and
+                We're not another AI consultancy selling hype. We're practical, UK-based, and
                 obsessively focused on delivering measurable time and cost savings for SMEs.
               </p>
             </div>
@@ -718,7 +721,7 @@ const App: React.FC = () => {
                   onClick={() => scrollToSection('#contact')}
                   className="btn-primary w-full py-3 rounded font-semibold tracking-wide"
                 >
-                  Let’s Talk
+                  Let's Talk
                 </button>
               </div>
             ))}
@@ -805,7 +808,21 @@ const App: React.FC = () => {
 
                 <div>
                   <label className="block text-sm font-semibold text-[#2C2C2C] mb-2">
-                    I’m interested in
+                    Phone Number <span className="text-[#555555] font-normal">(optional)</span>
+                  </label>
+                  <input
+                    type="tel"
+                    name="phone"
+                    placeholder="+44 7700 900000"
+                    value={formData.phone}
+                    onChange={handleInputChange}
+                    className="input-field w-full border border-[#E0E0E0] p-3 rounded text-[#2C2C2C]"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-semibold text-[#2C2C2C] mb-2">
+                    I'm interested in
                   </label>
                   <select
                     name="service"
@@ -813,7 +830,7 @@ const App: React.FC = () => {
                     onChange={handleInputChange}
                     className="input-field w-full border border-[#E0E0E0] p-3 rounded text-[#2C2C2C] bg-white"
                   >
-                    <option>Not sure yet — let’s discuss</option>
+                    <option>Not sure yet — let's discuss</option>
                     <option>AI Audit</option>
                     <option>Implementation</option>
                     <option>Monthly Retainer</option>
@@ -834,7 +851,7 @@ const App: React.FC = () => {
                 )}
 
                 <p className="text-center text-xs text-[#555555] pt-2">
-                  We’ll reply within 24 hours. No pressure, no hard sell.
+                  We'll reply within 24 hours. No pressure, no hard sell.
                 </p>
               </form>
             )}
