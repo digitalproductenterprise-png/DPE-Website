@@ -268,19 +268,28 @@ const App: React.FC = () => {
 
     setIsSubmitting(true);
     try {
-      const body = new URLSearchParams({
-        'form-name': 'contact',
-        name: formData.name,
-        businessName: formData.businessName,
-        email: formData.email,
-        service: formData.service,
-      });
-      const response = await fetch('/', {
+      const response = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: body.toString(),
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          access_key: '9af01a16-a55f-4377-8ac5-7aeb50822eb0',
+          subject: `New DPE lead — ${formData.name} (${formData.businessName})`,
+          from_name: 'DPE Website',
+          name: formData.name,
+          business_name: formData.businessName,
+          email: formData.email,
+          interested_in: formData.service,
+          replyto: formData.email,
+          botcheck: '',
+        }),
       });
-      if (!response.ok) throw new Error(`Submission failed: ${response.status}`);
+      const result = await response.json();
+      if (!result.success) {
+        throw new Error(result.message || 'Submission failed');
+      }
       setIsSubmitted(true);
       setTimeout(() => {
         setFormData({
@@ -742,20 +751,7 @@ const App: React.FC = () => {
                 </h3>
               </div>
             ) : (
-              <form
-                onSubmit={handleSubmit}
-                name="contact"
-                method="POST"
-                data-netlify="true"
-                data-netlify-honeypot="bot-field"
-                className="space-y-5"
-              >
-                <input type="hidden" name="form-name" value="contact" />
-                <p hidden>
-                  <label>
-                    Don’t fill this out: <input name="bot-field" />
-                  </label>
-                </p>
+              <form onSubmit={handleSubmit} className="space-y-5">
                 <div>
                   <label className="block text-sm font-semibold text-[#2C2C2C] mb-2">
                     Full Name
