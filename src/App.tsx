@@ -608,9 +608,9 @@ const App: React.FC = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-3 gap-6 text-center mt-16 max-w-3xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 sm:gap-10 text-center mt-16 max-w-3xl mx-auto">
             <div>
-              <div className="stat-glow text-4xl md:text-5xl font-bold">
+              <div className="stat-glow text-5xl font-bold whitespace-nowrap">
                 <CountUp end={500} suffix="+" />
               </div>
               <div className="text-xs uppercase tracking-[2px] text-[#555555] mt-2">
@@ -618,7 +618,7 @@ const App: React.FC = () => {
               </div>
             </div>
             <div>
-              <div className="stat-glow text-4xl md:text-5xl font-bold">
+              <div className="stat-glow text-5xl font-bold whitespace-nowrap">
                 <CountUp end={120} prefix="£" suffix="K+" />
               </div>
               <div className="text-xs uppercase tracking-[2px] text-[#555555] mt-2">
@@ -626,7 +626,7 @@ const App: React.FC = () => {
               </div>
             </div>
             <div>
-              <div className="stat-glow text-4xl md:text-5xl font-bold">
+              <div className="stat-glow text-5xl font-bold whitespace-nowrap">
                 <CountUp end={100} suffix="%" />
               </div>
               <div className="text-xs uppercase tracking-[2px] text-[#555555] mt-2">
