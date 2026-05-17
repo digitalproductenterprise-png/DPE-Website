@@ -1,49 +1,6 @@
-﻿import React, { useState, useEffect, useRef } from 'react';
+﻿import React, { useState } from 'react';
 import { Menu, X, ArrowRight, Check, ChevronRight } from 'lucide-react';
-import { motion, AnimatePresence, useInView } from 'framer-motion';
-
-interface CountUpProps {
-  end: number;
-  prefix?: string;
-  suffix?: string;
-  duration?: number;
-  formatter?: (value: number) => string;
-}
-
-const CountUp: React.FC<CountUpProps> = ({
-  end,
-  prefix = '',
-  suffix = '',
-  duration = 1800,
-  formatter,
-}) => {
-  const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { once: true, amount: 0.5 });
-  const [value, setValue] = useState(0);
-
-  useEffect(() => {
-    if (!inView) return;
-    let raf = 0;
-    const start = performance.now();
-    const tick = (now: number) => {
-      const progress = Math.min((now - start) / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      setValue(Math.round(end * eased));
-      if (progress < 1) raf = requestAnimationFrame(tick);
-    };
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
-  }, [inView, end, duration]);
-
-  const display = formatter ? formatter(value) : value.toLocaleString();
-  return (
-    <span ref={ref}>
-      {prefix}
-      {display}
-      {suffix}
-    </span>
-  );
-};
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface Service {
   title: string;
@@ -56,14 +13,6 @@ interface Step {
   description: string;
 }
 
-interface Testimonial {
-  id: number;
-  name: string;
-  business: string;
-  quote: string;
-  image: string;
-  savings: string;
-}
 
 interface PricingTier {
   title: string;
@@ -122,35 +71,6 @@ const steps: Step[] = [
   },
 ];
 
-const testimonials: Testimonial[] = [
-  {
-    id: 1,
-    name: 'Sarah Thompson',
-    business: 'Thompson & Co Retail',
-    quote:
-      'DPE saved us 28 hours a week on admin alone. The automation they built paid for itself in under 6 weeks. Finally, we have time to focus on customers again.',
-    image: '/testimonials/sarah.jpg',
-    savings: '£47,000 saved',
-  },
-  {
-    id: 2,
-    name: 'James Harrington',
-    business: 'Harrington Building Services',
-    quote:
-      'We were sceptical about AI. DPE showed us exactly where it would help — and it did. Our response time to leads dropped from 2 days to under 4 hours.',
-    image: '/testimonials/james.jpg',
-    savings: '£82,000 saved',
-  },
-  {
-    id: 3,
-    name: 'Emma Patel',
-    business: 'The Little Kitchen Group',
-    quote:
-      "The AI content and marketing system they built generates 3x more leads than our old process. Our team is happier and we're turning away less business.",
-    image: '/testimonials/emma.jpg',
-    savings: '£31,500 saved',
-  },
-];
 
 const pricingTiers: PricingTier[] = [
   {
@@ -452,7 +372,7 @@ const App: React.FC = () => {
           {/* Trust bar */}
           <div className="border-t border-white/10 pt-8 mt-2">
             <div className="text-[14px] font-extrabold tracking-[3px] uppercase text-white/80 mb-4">
-              Trusted by UK businesses across
+              Focused on UK businesses in
             </div>
             <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-white/65 text-sm md:text-[15px]">
               {trustIndustries.map((industry, i) => (
@@ -614,70 +534,94 @@ const App: React.FC = () => {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 sm:gap-10 text-center mt-16 max-w-3xl mx-auto">
             <div>
               <div className="stat-glow text-5xl font-bold whitespace-nowrap">
-                <CountUp end={500} suffix="+" />
+                25+
               </div>
               <div className="text-xs uppercase tracking-[2px] text-[#555555] mt-2">
-                Hours Saved
+                Years UK B2B Sales
               </div>
             </div>
             <div>
               <div className="stat-glow text-5xl font-bold whitespace-nowrap">
-                <CountUp end={120} prefix="£" suffix="K+" />
+                30 min
               </div>
               <div className="text-xs uppercase tracking-[2px] text-[#555555] mt-2">
-                Client Savings
+                Free Audit Call
               </div>
             </div>
             <div>
               <div className="stat-glow text-5xl font-bold whitespace-nowrap">
-                <CountUp end={100} suffix="%" />
+                30-90
               </div>
               <div className="text-xs uppercase tracking-[2px] text-[#555555] mt-2">
-                UK Businesses
+                Days to First Results
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Results */}
+      {/* What You Get */}
       <section id="results" className="py-20 max-w-6xl mx-auto px-6">
         <div className="mb-12">
           <span className="inline-block uppercase tracking-[3px] text-[#C9A227] text-xs font-semibold mb-3">
-            Real Results
+            What to Expect
           </span>
           <h2 className="charcoal-heading text-4xl md:text-5xl tracking-tight max-w-2xl leading-[1.1]">
-            Businesses like yours are saving time and money
+            Your free audit. In plain English.
           </h2>
+          <p className="mt-4 text-[#555555] text-base md:text-[17px] max-w-xl">
+            No pitch. No jargon. Just a clear, honest picture of where AI can save your business time and money.
+          </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-6">
-          {testimonials.map((t) => (
-            <div
-              key={t.id}
-              className="testimonial-card bg-white p-8 rounded-2xl border border-[#EFEFEF] flex flex-col"
-            >
-              <div className="text-[#C9A227] text-4xl leading-none mb-3 font-serif">“</div>
-              <p className="text-[#2C2C2C] mb-6 leading-relaxed text-[15px] flex-1">
-                {t.quote}
-              </p>
-              <div className="flex items-center gap-3 pt-5 border-t border-[#F0F0F0]">
-                <img
-                  src={t.image}
-                  alt={t.name}
-                  loading="lazy"
-                  className="avatar-photo"
-                />
-                <div>
-                  <div className="font-semibold text-[#2C2C2C] text-sm">{t.name}</div>
-                  <div className="text-xs text-[#555555]">{t.business}</div>
-                </div>
-              </div>
-              <div className="mt-4 inline-flex self-start items-center px-3 py-1 rounded-full bg-[#C9A227]/10 text-[#C9A227] text-xs font-semibold tracking-wide">
-                {t.savings}
-              </div>
+        <div className="grid md:grid-cols-3 gap-6 mb-12">
+          {([
+            {
+              icon: '1',
+              title: '3 to 5 specific opportunities',
+              description:
+                'We identify exactly where AI can help - not vague suggestions, but specific tools and workflows tailored to how your business actually operates.',
+            },
+            {
+              icon: '2',
+              title: 'Clear ROI estimate',
+              description:
+                'For each recommendation, you get a realistic time and cost saving estimate so you can make an informed decision - no inflated promises.',
+            },
+            {
+              icon: '3',
+              title: 'No obligation whatsoever',
+              description:
+                "If AI isn't the right fit for you right now, we'll tell you honestly. The audit is genuinely free and there's no pressure to take things further.",
+            },
+          ] as const).map((item, i) => (
+            <div key={i} className="bg-white p-8 rounded-2xl border border-[#EFEFEF] shadow-sm">
+              <div className="step-circle mb-6">{item.icon}</div>
+              <h3 className="text-[#2C2C2C] font-semibold text-xl mb-3 tracking-[-0.2px]">
+                {item.title}
+              </h3>
+              <p className="text-[#555555] text-[15px] leading-relaxed">{item.description}</p>
             </div>
           ))}
+        </div>
+
+        <div className="bg-[#2C2C2C] text-white rounded-2xl p-8 md:p-10 text-center">
+          <p className="text-[#C9A227] text-xs font-semibold tracking-[3px] uppercase mb-3">
+            Founding Clients
+          </p>
+          <h3 className="text-2xl md:text-3xl font-bold mb-3 tracking-tight">
+            We are currently accepting a small number of new clients
+          </h3>
+          <p className="text-white/70 text-base max-w-xl mx-auto mb-6">
+            Every new client works directly with Justin - not handed off to a junior consultant.
+            That means faster decisions, more personal service, and results you can actually track.
+          </p>
+          <button
+            onClick={() => scrollToSection('#contact')}
+            className="btn-primary px-8 py-3 rounded font-semibold tracking-wide"
+          >
+            Book Your Free Audit
+          </button>
         </div>
       </section>
 
